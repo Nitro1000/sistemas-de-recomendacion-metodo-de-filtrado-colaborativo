@@ -41,7 +41,7 @@ func Pearson(person1, person2 []float64, emptyElement Pair) (result float64) {
 	}
 	den := math.Sqrt(aux1) * math.Sqrt(aux2)
 	result = float64(num) / den
-	fmt.Println(person1, person2)
+	
 	return
 }
 
@@ -61,7 +61,7 @@ func Coseno(person1, person2 []float64, emptyElement Pair) (result float64) {
 	}
 	den := math.Sqrt(aux1) * math.Sqrt(aux2)
 	result = float64(num) / den
-	fmt.Println(person1, person2)
+	
 	return
 }
 
@@ -74,7 +74,7 @@ func Euclide(person1, person2 []float64, emptyElement Pair) (result float64) {
 		result += math.Pow(float64(person1[i])-float64(person2[i]), 2)
 	}
 	result = math.Sqrt(result)
-	fmt.Println(person1, person2)
+	
 	return
 }
 
@@ -149,7 +149,6 @@ func main() {
 		if char == "\n" {
 			matrixAux = append(matrixAux, rowAux)
 			rowAux = nil
-			// fmt.Println("Leido un endline")
 		}
 		if err != nil {
 			if err != io.EOF {
@@ -159,10 +158,8 @@ func main() {
 			matrixAux = append(matrixAux, rowAux)
 			break
 		}
-		// fmt.Println("Leído este fragmento: ", char)
 	}
 
-	// fmt.Println(matrixAux)
 
 	var matrix [][]float64
 	var row []float64
@@ -205,7 +202,7 @@ func main() {
 			metricValues = append(metricValues, (-1 * math.MaxFloat64))
 		}
 	}
-	fmt.Println(metricValues)
+	
 
 	var neighborSelect []int
 	var tempMetricValues = make([]float64, len(metricValues))
@@ -227,15 +224,28 @@ func main() {
 		log.Fatal("ERROR: unknown prediction")
 	}
 
-	fmt.Println(predict)
+	matrix[emptyElement.posI][emptyElement.posJ] = predict
+	// fmt.Print(matrix[i][j])
+	metricValues = remove(metricValues, emptyElement.posI)
+	fmt.Println(metricValues)
+	PrintMatrix(matrix)
 
-	// for i := 0; i < len(matrix); i++ {
-	// 	for j := 0; j < len(matrix[i]); j++ {
-	// 		fmt.Print(matrixAux[i][j])
-	// 	}
-	// 	fmt.Println()
-	// }
+}
 
+func PrintMatrix(matrix [][]float64) {
+	fmt.Printf("\t")
+	for i := 0; i < len(matrix); i++ {
+		fmt.Printf("\tItem %d: ", i)
+	}
+	fmt.Println()
+	for i := 0; i < len(matrix); i++ {
+		fmt.Printf("Persona %d \t", i)
+		for j := 0; j < len(matrix[i]); j++ {
+			fmt.Printf("%.2f \t\t", matrix[i][j])
+
+		}
+		fmt.Println()
+	}
 }
 
 func indexOfMaxNumber(array []float64) (result int) {
